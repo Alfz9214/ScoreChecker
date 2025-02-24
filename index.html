@@ -1,10 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scoreboard</title>
-    <style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lacquer&family=Notable&family=Solway:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+   <style>
         @keyframes pop {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -20,7 +24,7 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Notable', serif;
             background: url('/img/type/webp/shippattern.webp') no-repeat center center/cover;
             color: white;
             text-align: center;
@@ -82,13 +86,15 @@
             font-size: 80px;
             margin: 20px 0;
             font-weight: bold;
+            font-family: Solway;
         }
 
         .vs {
             font-size: 50px;
             font-weight: bold;
             margin: 0 30px;
-            color: rgba(0, 0, 0, 0.534);
+            color: rgba(0, 0, 0, 0.63);
+            font-family: Lacquer;
         }
 
         .score.animated {
@@ -173,6 +179,15 @@
     width: 100px; 
     height: auto; 
 }
+
+h1 {
+    text-align: center;
+    margin: 0 auto; 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+}
+
 
     </style>
 </head>
