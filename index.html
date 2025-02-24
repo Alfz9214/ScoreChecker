@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoreboard</title>
+    <style>
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        @keyframes flyIn {
+            from { transform: translateY(-100vh); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeSlideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('/img/type/webp/shippattern.webp') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .video-overlay video {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 80vh;
+            animation: flyIn 1s ease-out;
+        }
+
+        .scoreboard {
+            background: rgba(255, 0, 0, 0.637);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            width: 300px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .image-container img {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .score {
+            font-size: 80px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .vs {
+            font-size: 50px;
+            font-weight: bold;
+            margin: 0 30px;
+            color: rgba(0, 0, 0, 0.534);
+        }
+
+        .score.animated {
+            animation: pop 0.3s ease-in-out;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .buttons button {
+            background: white;
+            color: red;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .buttons button:hover {
+            background: #ffcccc;
+        }
+
+        .image-input {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .image-input.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeSlideIn 0.3s ease-out;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .image-input input {
+            padding: 10px;
+            width: 60%;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .image-input input:focus {
+            background: #ffcccc;
+        }
+
+        footer {
+    color: rgba(2, 1, 2, 0.452);
+    background-color: rgba(233, 233, 233, 0);
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.sponsors {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+    padding: 10px 0; 
+}
+
+.sponsors img {
+    width: 100px; 
+    height: auto; 
+}
+
+    </style>
+</head>
+<body>
+    <h1>Today's Game</h1>
+    
+    <div class="video-overlay" id="videoOverlay">
+        <video id="scoreVideo" src="/GOAL.mp4"></video>
+    </div>
+    
+    <div class="container">
+        <div class="scoreboard">
+            <div class="image-container">
+                <img id="image1" src="/img/type/png/homecrest.png" alt="Home Crest">
+            </div>
+            <div class="score" id="score1">0</div>
+            <div class="buttons">
+                <button onclick="increaseScore(1)">+1</button>
+                <button onclick="toggleImageInput(1)">Change Crest</button>
+                <div class="image-input" id="imageInput1">
+                    <input type="text" id="imagePath1" placeholder="Enter image URL">
+                    <button onclick="changeImage(1)">Update</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="vs">V/S</div>
+        
+        <div class="scoreboard">
+            <div class="image-container">
+                <img id="image2" src="img/type/png/Placeholder1.png" alt="Away Crest">
+            </div>
+            <div class="score" id="score2">0</div>
+            <div class="buttons">
+                <button onclick="increaseScore(2)">+1</button>
+                <button onclick="toggleImageInput(2)">Change Crest</button>
+                <div class="image-input" id="imageInput2">
+                    <input type="text" id="imagePath2" placeholder="Enter image URL">
+                    <button onclick="changeImage(2)">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="sponsors">
+        <img src="/img/type/webp/fanatics.webp" alt="Sponsor 1">
+        <img src="/img/type/webp/hummel.webp" alt="Sponsor 2">
+        <img src="/img/type/webp/spreadex.webp" alt="Sponsor 3">
+        <img src="/img/type/webp/serios.webp" alt="Sponsor 4">
+        <img src="/img/type/webp/valhalla.webp" alt="Sponsor 5">
+        <img src="/img/type/webp/tcne.webp" alt="Sponsor 6">
+    </footer>
+
+    <script>
+        function increaseScore(id) {
+            let scoreElement = document.getElementById(`score${id}`);
+            let currentScore = parseInt(scoreElement.innerText);
+            scoreElement.innerText = currentScore + 1;
+            playVideo();
+        }
+
+        function playVideo() {
+            let videoOverlay = document.getElementById("videoOverlay");
+            let video = document.getElementById("scoreVideo");
+            videoOverlay.style.display = "flex";
+            video.play();
+            video.onended = () => {
+                videoOverlay.style.display = "none";
+            };
+        }
+
+        function toggleImageInput(id) {
+            let inputDiv = document.getElementById(`imageInput${id}`);
+            inputDiv.classList.toggle("active");
+        }
+
+        function changeImage(id) {
+            let imagePath = document.getElementById(`imagePath${id}`).value;
+            let imageElement = document.getElementById(`image${id}`);
+            if (imagePath) {
+                imageElement.src = imagePath;
+            }
+        }
+    </script>
+</body>
+</html>
